@@ -268,8 +268,15 @@ function isPalindrome(str) {
  *  'qwerty', 'Q'     => -1
  *  'qwerty', 'p'     => -1
  */
-function getIndexOf(/* str, letter */) {
-  throw new Error('Not implemented');
+function getIndexOf(str, letter) {
+  let result;
+  for (let i = 0; i < str.length; i += 1) {
+    if (str[i] === letter) {
+      result = i;
+      break;
+    }
+  }
+  return result ?? -1;
 }
 
 /**
@@ -287,8 +294,16 @@ function getIndexOf(/* str, letter */) {
  *  12345, 0    => false
  *  12345, 6    => false
  */
-function isContainNumber(/* num, digit */) {
-  throw new Error('Not implemented');
+function isContainNumber(num, digit) {
+  let number = num;
+  let result = false;
+  while (!result && number !== 0) {
+    if (number % 10 === digit) {
+      result = true;
+    }
+    number = Math.floor(number / 10);
+  }
+  return result;
 }
 
 /**
@@ -304,8 +319,24 @@ function isContainNumber(/* num, digit */) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  if (arr.length <= 2) {
+    return -1;
+  }
+  let leftSum = 0;
+  let result = -1;
+  for (let i = 1; i < arr.length; i += 1) {
+    let rightSum = 0;
+    leftSum += arr[i - 1];
+    for (let y = arr.length - 1; y > i; y -= 1) {
+      rightSum += arr[y];
+    }
+    if (rightSum === leftSum) {
+      result = i;
+      break;
+    }
+  }
+  return result;
 }
 
 /**
@@ -329,8 +360,42 @@ function getBalanceIndex(/* arr */) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  let num = 0;
+  let iStart = 0;
+  let iEnd = 0;
+  let yStart = 0;
+  let yEnd = 0;
+  let i = 0;
+  let y = 0;
+  const result = [];
+  for (let x = 0; x < size; x += 1) {
+    const row = [];
+    for (let j = 0; j < size; j += 1) {
+      row[j] = 0;
+    }
+    result[x] = row;
+  }
+  while (num < size ** 2) {
+    num += 1;
+    result[i][y] = num;
+    if (i === iStart + 1 && y === yStart && yStart !== size - yEnd - 1) {
+      iStart += 1;
+      iEnd += 1;
+      yStart += 1;
+      yEnd += 1;
+    }
+    if (i === iStart && y < size - yEnd - 1) {
+      y += 1;
+    } else if (y === size - yEnd - 1 && i < size - iEnd - 1) {
+      i += 1;
+    } else if (i === size - iEnd - 1 && y > yStart) {
+      y -= 1;
+    } else if (y === iStart && i > iStart) {
+      i -= 1;
+    }
+  }
+  return result;
 }
 
 /**
