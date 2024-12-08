@@ -8,7 +8,6 @@
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch       *
  *                                                                                           *
  ******************************************************************************************* */
-
 /**
  * Determines whether a given number is positive. Zero is considered positive.
  * This function does not use Number or Math class methods.
@@ -489,8 +488,30 @@ function sortByAsc(arr, start = 0, end = arr.length - 1) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
+function shuffleChar(str, iterations) {
+  if (iterations <= 0) {
+    return str;
+  }
+  let iter = iterations;
+  let result = str;
+  let count = 0;
+  while (iter > 0) {
+    if (result === str && count > 0) {
+      iter %= count;
+    }
+    let evenStr = '';
+    let oddStr = '';
+    for (let i = 0; i < result.length; i += 2) {
+      oddStr += result[i];
+      if (i + 1 < result.length) {
+        evenStr += result[i + 1];
+      }
+    }
+    result = oddStr + evenStr;
+    iter -= 1;
+    count += 1;
+  }
+  return result;
 }
 
 /**
