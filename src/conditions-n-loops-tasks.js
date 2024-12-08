@@ -417,15 +417,15 @@ function rotateMatrix(matrix) {
   const result = matrix;
   const matrixOrign = [];
   const maxIndex = matrix.length - 1;
-  for (let x = 0; x < matrix.length; x += 1) {
+  for (let x = 0; x <= maxIndex; x += 1) {
     const row = [];
-    for (let y = 0; y < matrix.length; y += 1) {
+    for (let y = 0; y <= maxIndex; y += 1) {
       row[y] = matrix[x][y];
     }
     matrixOrign[x] = row;
   }
-  for (let i = 0; i < matrixOrign.length; i += 1) {
-    for (let j = 0; j < matrixOrign.length; j += 1) {
+  for (let i = 0; i <= maxIndex; i += 1) {
+    for (let j = 0; j <= maxIndex; j += 1) {
       result[i][j] = matrixOrign[maxIndex - j][i];
     }
   }
@@ -445,8 +445,31 @@ function rotateMatrix(matrix) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
+function sortByAsc(arr, start = 0, end = arr.length - 1) {
+  const sortedArr = arr;
+  let leftIndex = start;
+  let mainIndex = end;
+  while (leftIndex < mainIndex) {
+    if (sortedArr[mainIndex - 1] < sortedArr[mainIndex]) {
+      [sortedArr[mainIndex - 1], sortedArr[leftIndex]] = [
+        sortedArr[leftIndex],
+        sortedArr[mainIndex - 1],
+      ];
+      leftIndex += 1;
+    } else {
+      [sortedArr[mainIndex - 1], sortedArr[mainIndex]] = [
+        sortedArr[mainIndex],
+        sortedArr[mainIndex - 1],
+      ];
+      mainIndex -= 1;
+    }
+  }
+  if (leftIndex - start > 1) {
+    sortByAsc(arr, start, leftIndex === mainIndex ? leftIndex - 1 : leftIndex);
+  }
+  if (end - mainIndex > 1) {
+    sortByAsc(arr, mainIndex + 1, end);
+  }
 }
 
 /**
